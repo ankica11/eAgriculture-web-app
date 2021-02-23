@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./templates/mainTamplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:define name="preR">
+        <f:event type="preRenderView" listener="#{magacinController.prerenderExecute()}" />
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+             <div align="center">
+                 <h3 style="color: #ff99cc">MOJI MAGACINI</h3>
+        
+        <h:outputText style="color: red; font-size: 20px" value="Nema proizvoda na raspolaganju" rendered="#{empty magacinController.mojiMagacini}"/>
+        
+        <p:dataTable value="#{magacinController.mojiMagacini}" var="magacin" rendered="#{not empty magacinController.mojiMagacini}" filteredValue="#{magacinController.magaciniFilter}" emptyMessage="Nijedan proizvod se ne podudara sa pretragom" style="width: 80%; text-align: center" rowStyleClass="#{magacin.kolicina == 0 ? 'noItemsInStorage': null}">
+            <p:column filterBy="#{magacin.onlineprodavnica.naziv}" filterMatchMode="exact" sortBy="#{magacin.onlineprodavnica.naziv}" style="text-align: center">
+                <f:facet name="header">Proizvod</f:facet>
+                #{magacin.onlineprodavnica.naziv}
+            </p:column>
+            <p:column filterBy="#{magacin.onlineprodavnica.preduzece.naziv}" filterMatchMode="exact" sortBy="#{magacin.onlineprodavnica.preduzece.naziv}" style="text-align: center">
+                <f:facet name="header">Proizvođač</f:facet>
+                #{magacin.onlineprodavnica.preduzece.naziv}
+            </p:column>
+            <p:column filterBy="#{magacin.onlineprodavnica.tip}" filterMatchMode="exact" sortBy="#{magacin.onlineprodavnica.tip}" style="text-align: center">
+                <f:facet name="header">Tip</f:facet>
+                #{magacin.onlineprodavnica.tip}
+            </p:column>
+            <p:column filterBy="#{magacin.kolicina}" filterMatchMode="exact" sortBy="#{magacin.kolicina}" style="text-align: center">
+                <f:facet name="header">Na stanju</f:facet>
+                #{magacin.kolicina}
+            </p:column>
+            <p:column filterBy="#{magacin.rasadnik.naziv}" filterMatchMode="exact" sortBy="#{magacin.rasadnik.naziv}" style="text-align: center">
+                <f:facet name="header">Rasadnik</f:facet>
+                #{magacin.rasadnik.naziv}
+            </p:column>
+            <p:column filterBy="#{magacin.rasadnik.mesto}" filterMatchMode="exact" sortBy="#{magacin.rasadnik.mesto}" style="text-align: center">
+                <f:facet name="header">Mesto</f:facet>
+                #{magacin.rasadnik.mesto}
+            </p:column>
+        </p:dataTable>
+        
+        </div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+           
+             <p:panel header="OBAVEŠTENJE" rendered="#{not empty poljoprivrednikMainController.kriticniRasadnici}" style="background-color: #ff99cc;font-size: 15px; text-align: center; width: 30%; position: fixed; bottom: 0; right: 0">
+                <div style="color: red">Rasadnici #{poljoprivrednikMainController.kriticniRasadnici} zahtevaju hitno odrzavanje !!!</div>
+             </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

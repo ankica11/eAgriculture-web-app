@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17.05.2020. 19.35.55 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="beans.Poljoprivrednik" table="poljoprivrednik" catalog="projekat" optimistic-lock="version">
+        <id name="usernamePoljo" type="string">
+            <column name="usernamePoljo" length="45" />
+            <generator class="foreign">
+                <param name="property">korisnik</param>
+            </generator>
+        </id>
+        <one-to-one name="korisnik" class="beans.Korisnik" constrained="true"></one-to-one>
+        <property name="ime" type="string">
+            <column name="ime" length="45" not-null="true" />
+        </property>
+        <property name="prezime" type="string">
+            <column name="prezime" length="45" not-null="true" />
+        </property>
+        <property name="datumRodjenja" type="date">
+            <column name="datumRodjenja" length="10" not-null="true" />
+        </property>
+        <property name="mestoRodjenja" type="string">
+            <column name="mestoRodjenja" length="45" not-null="true" />
+        </property>
+        <property name="telefon" type="string">
+            <column name="telefon" length="45" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="45" not-null="true" />
+        </property>
+        <set name="rasadniks" table="rasadnik" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="usernamePoljo" length="45" not-null="true" />
+            </key>
+            <one-to-many class="beans.Rasadnik" />
+        </set>
+        <set name="ocenes" table="ocene" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="usernamePoljo" length="45" not-null="true" />
+            </key>
+            <one-to-many class="beans.Ocene" />
+        </set>
+    </class>
+</hibernate-mapping>

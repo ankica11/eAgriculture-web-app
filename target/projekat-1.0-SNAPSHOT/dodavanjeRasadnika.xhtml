@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./templates/mainTamplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="preR">
+        <f:event type="preRenderView" listener="#{dodavanjeRasadnikController.preRenderExecute()}" />
+    </ui:define>
+
+    <ui:define name="content">
+        <div align="center">
+            <h1>Dodajte nov rasadnik</h1>
+            <h:form>
+                <p:panel style="width: 50%">
+                    <h:panelGrid columns="3" style="width: 50%">
+                        Naziv: 
+                        <p:inputText id="naziv" value="#{dodavanjeRasadnikController.naziv}" required="true" requiredMessage="Obavezno polje"/>
+                        <p:message for="naziv" style="color: white"/>
+                        Mesto: 
+                        <p:inputText id="mesto" value="#{dodavanjeRasadnikController.mesto}" required="true" requiredMessage="Obavezno polje"/>
+                        <p:message for="mesto" style="color: white"/>
+                        Širina: 
+                        <p:inputText id="sirina" value="#{dodavanjeRasadnikController.sirina}" required="true" requiredMessage="Obavezno polje"/>
+                        <p:message for="sirina" style="color: white"/>
+                        Dužina:
+                        <p:inputText id="duzina" value="#{dodavanjeRasadnikController.duzina}" required="true" requiredMessage="Obavezno polje"/>
+                        <p:message for="duzina" style="color: white"/>
+                        <h:outputText value="   "/>
+                        <p:commandButton value="DODAJ" action="#{dodavanjeRasadnikController.dodajRasadnik()}" update="@form"></p:commandButton>
+                       
+                    </h:panelGrid>
+                    
+                </p:panel><br/><br/><br/>
+                <h:outputText value="#{dodavanjeRasadnikController.message}" style="color: palegreen; font-size: 20px"/>
+                
+                      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+       <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+           
+                 <p:panel header="OBAVEŠTENJE" rendered="#{not empty poljoprivrednikMainController.kriticniRasadnici}" style="background-color: #ff99cc;font-size: 15px; text-align: center; width: 30%; position: fixed; bottom: 0; right: 0">
+                <div style="color: red">Rasadnici #{poljoprivrednikMainController.kriticniRasadnici} zahtevaju hitno odrzavanje !!!</div>
+                 </p:panel>
+            </h:form>
+            
+        </div>
+    </ui:define>
+
+</ui:composition>

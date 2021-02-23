@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17.05.2020. 19.35.55 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="beans.Ocene" table="ocene" catalog="projekat" optimistic-lock="version">
+        <id name="idO" type="java.lang.Integer">
+            <column name="idO" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="onlineprodavnica" class="beans.Onlineprodavnica" fetch="select">
+            <column name="idPro" not-null="true" />
+        </many-to-one>
+        <many-to-one name="poljoprivrednik" class="beans.Poljoprivrednik" fetch="select">
+            <column name="usernamePoljo" length="45" not-null="true" />
+        </many-to-one>
+        <property name="ocena" type="int">
+            <column name="ocena" not-null="true" />
+        </property>
+        <property name="komentar" type="string">
+            <column name="komentar" length="100" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

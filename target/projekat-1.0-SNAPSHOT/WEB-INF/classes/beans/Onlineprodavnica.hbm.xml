@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17.05.2020. 19.35.55 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="beans.Onlineprodavnica" table="onlineprodavnica" catalog="projekat" optimistic-lock="version">
+        <id name="idPro" type="java.lang.Integer">
+            <column name="idPro" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="preduzece" class="beans.Preduzece" fetch="select">
+            <column name="usernamePred" length="45" not-null="true" />
+        </many-to-one>
+        <property name="naziv" type="string">
+            <column name="naziv" length="45" not-null="true" />
+        </property>
+        <property name="kolicina" type="string">
+            <column name="kolicina" length="45" not-null="true" />
+        </property>
+        <property name="tip" type="string">
+            <column name="tip" length="45" not-null="true" />
+        </property>
+        <property name="uputstvo" type="java.lang.Integer">
+            <column name="uputstvo" />
+        </property>
+        <property name="jedinicnaCena" type="big_decimal">
+            <column name="jedinicnaCena" precision="5" not-null="true" />
+        </property>
+        <property name="srOcena" type="big_decimal">
+            <column name="srOcena" precision="5" not-null="true" />
+        </property>
+       
+         <property name="povucen" type="int">
+            <column name="povucen" />
+        </property>
+        <set name="stavkas" table="stavka" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idPro" not-null="true" />
+            </key>
+            <one-to-many class="beans.Stavka" />
+        </set>
+        <set name="magacins" table="magacin" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idPro" not-null="true" />
+            </key>
+            <one-to-many class="beans.Magacin" />
+        </set>
+        <set name="ocenes" table="ocene" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idPro" not-null="true" />
+            </key>
+            <one-to-many class="beans.Ocene" />
+        </set>
+    </class>
+</hibernate-mapping>

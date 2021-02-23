@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./templates/mainTamplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h:form>
+        <div align="center">
+            <h1>Detalji o proizvodu "#{preduzeceProizvodiController.izabranProizvod.naziv}"</h1>
+            <h:panelGrid columns="2">
+                Srednja ocena:
+                <h:outputText value="#{preduzeceProizvodiController.izabranProizvod.srOcena}" style="color: greenyellow; font-size: 20px; font-weight: bold"/>
+                    <br/><br/><br/><br/>
+            </h:panelGrid>
+            <h:outputText value="Nema nijednog komentara o proizvodu"  rendered="#{empty preduzeceProizvodiController.ocene}"/>
+            <p:dataTable value="#{preduzeceProizvodiController.ocene}" var="ocena" style="text-align: center; width: 50%" rendered="#{not empty preduzeceProizvodiController.ocene}">
+                <p:column style="text-align: center">
+                    <f:facet name="header">Korisnicko ime</f:facet>
+                    #{ocena.poljoprivrednik.usernamePoljo}
+                </p:column>
+                <p:column style="text-align: center">
+                    <f:facet name="header">Ocena</f:facet>
+                    <p:rating value="#{ocena.ocena}" readonly="true"/>
+                    
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Komentar</f:facet>
+                    #{ocena.komentar}
+                    
+                </p:column>
+            </p:dataTable>
+             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+       <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+       
+            
+        </div>
+            <br/><br/><br/>
+            <a href="preduzeceProizvodi.xhtml">Prethodna</a>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

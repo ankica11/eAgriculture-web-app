@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="default.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <ui:insert name="preR"></ui:insert>
+        <title>***ePoljoprivrednik ETF***</title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top">
+            <ui:insert name="top"><h:graphicImage library="images" name="top2.jpg" width="100%" height="50%"/></ui:insert>
+        </div>
+        <div>
+            <div id="left">
+                <ui:insert name="left">
+                    <h:form id="menuForm">
+                        
+                        <p:panelMenu>
+                            <p:submenu label="Navigacija" id="nav">
+                                <p:menuitem id="pocetna2" value="Pocetna" url="./preduzeceNarudzbine.xhtml" icon="ui-icon-home" rendered='#{loggedInUser.getTip().equals("preduzetnik")}'/>
+                                <p:menuitem id="pocetna" value="Pocetna" url="./poljoprivrednik.xhtml" icon="ui-icon-home" rendered="#{loggedInUser.getTip().equals('poljoprivrednik')}"/>
+                                <p:menuitem id="pocetna3" value="Pocetna" url="./admin.xhtml" icon="ui-icon-home" rendered='#{loggedInUser.getTip().equals("admin")}'/>
+                               
+                            </p:submenu>
+                            <p:submenu id="pretraga" label="Pretraga" >
+                                <p:menuitem id="magacin" value="Pretrazi magacin" url="./pretrazivanjeMagacina.xhtml" icon="ui-icon-star" rendered="#{loggedInUser.getTip().equals('poljoprivrednik')}"/>
+                                <p:menuitem id="narudzbina" value="Moje narudzbine" url="./poljoprivrednikNarudzbine.xhtml" icon="ui-icon-clipboard" rendered="#{loggedInUser.getTip().equals('poljoprivrednik')}"/>
+                                <p:menuitem id="onlineshop" value="Online prodavnica" url="./onlineShop.xhtml" icon="ui-icon-cart" rendered="#{loggedInUser.getTip().equals('poljoprivrednik')}"/>
+                                <p:menuitem id="rasadnik" value="Dodaj rasadnik" url="./dodavanjeRasadnika.xhtml" icon="ui-icon-plus" rendered="#{loggedInUser.getTip().equals('poljoprivrednik')}"/>
+                                <p:menuitem id="preduzeceNarudzbine" value="Narudzbine" url="./preduzeceNarudzbine.xhtml" icon="ui-icon-clipboard" rendered='#{loggedInUser.getTip().equals("preduzetnik")}'/>
+                                <p:menuitem id="proizvodi" value="Proizvodnja" url="./preduzeceProizvodi.xhtml" icon="ui-icon-cart" rendered='#{loggedInUser.getTip().equals("preduzetnik")}'/>
+                                <p:menuitem id="dodavanje" value="Pusti u prodaju" url="./dodavanjeProizvoda.xhtml" icon="ui-icon-plus" rendered='#{loggedInUser.getTip().equals("preduzetnik")}'/>
+                                <p:menuitem id="poslovanje" value="Poslovanje" url="./rezultatiPoslovanja.xhtml" icon="ui-icon-info" rendered='#{loggedInUser.getTip().equals("preduzetnik")}'/>
+                                <p:menuitem id="admin1" value="Dodaj korisnika" url="./dodavanjeAdmin.xhtml" icon="ui-icon-plusthick" rendered='#{loggedInUser.getTip().equals("admin")}'/>
+                                <p:menuitem id="admin2" value="Azuriraj korisnika" url="./azuriranjeAdmin.xhtml" icon="ui-icon-pencil" rendered='#{loggedInUser.getTip().equals("admin")}'/>
+                                <p:menuitem id="admin3" value="Obriši korisnika" url="./brisanjeAdmin.xhtml" icon="ui-icon-trash" rendered='#{loggedInUser.getTip().equals("admin")}'/>
+                           
+                            </p:submenu>
+                            <p:submenu id="nalog" label="Moj nalog">
+                                <p:menuitem id="signout" value="Sign out" action="#{loginController.signOut()}" icon="ui-icon-person"/>
+                                <p:menuitem id="lozinka" value="Promena lozinke" url="./changePassword.xhtml" icon="ui-icon-key"/>
+                            </p:submenu>
+                            
+                        </p:panelMenu>
+                    </h:form>
+                    <h:form>
+                    <p:poll interval="30" listener="#{azuriranjeController.azurirajVremena()}"/>
+                    
+                    <p:poll interval="3600" listener="#{azuriranjeController.azurirajSveRasadnike()}" />
+                    
+                    <p:poll interval="3600" listener="#{azuriranjeController.azurirajVremenaSadnica()}" />
+                  
+                   
+                    </h:form>
+                    
+               
+                </ui:insert>
+            </div>
+            <div id="content" class="left_content">
+                <ui:insert name="content">Content</ui:insert>
+                
+            </div>
+        </div>
+        <div id="bottom">
+            <ui:insert name="bottom">
+                <div align="center">
+                 <h:outputText value="©2020 ANKA GROUP" style="color: white; font-style: italic"/>
+                </div>
+            </ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

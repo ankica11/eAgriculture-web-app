@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17.05.2020. 19.35.55 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="beans.Narudzbina" table="narudzbina" catalog="projekat" optimistic-lock="version">
+        <id name="idN" type="java.lang.Integer">
+            <column name="idN" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="rasadnik" class="beans.Rasadnik" fetch="select">
+            <column name="idRas" not-null="true" />
+        </many-to-one>
+        <property name="datum" type="date">
+            <column name="datum" length="10" not-null="true" />
+        </property>
+        <set name="stavkas" table="stavka" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idNar" not-null="true" />
+            </key>
+            <one-to-many class="beans.Stavka" />
+        </set>
+    </class>
+</hibernate-mapping>

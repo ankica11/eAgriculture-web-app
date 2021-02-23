@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./templates/startTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+   
+
+    <ui:define name="content">
+        <h:form>
+        <div align="center">
+        <h1>Dobrodošli molimo Vas prijavite se</h1>
+        
+            
+            <h:panelGrid columns="2">
+                Korisnicko ime:
+                <p:inputText value="#{loginController.username}"></p:inputText>
+                Lozinka:
+                <p:password value="#{loginController.password}"></p:password>
+                <p:commandButton action="#{loginController.login()}" value="PRIJAVI SE" ajax="false"></p:commandButton>
+                <h:outputText value="    " id="messageId" binding="#{loginController.component}"></h:outputText>
+            
+            </h:panelGrid>
+            <p:message for="messageId"/>
+        </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

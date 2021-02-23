@@ -1,0 +1,94 @@
+body {
+    background-color: #ffffff;
+    font-size: 12px;
+    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    color: #000000;  
+    margin: 10px;
+}
+
+h1 {
+    font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    
+    font-size:  30px;
+    font-weight: bold;
+    
+    padding: 0px;
+    color: #dddbe5;
+}
+
+h3 {
+    font-size: 25px;
+}
+
+a:link, a:visited {
+  color: #dcd7ef;
+  font-weight : bold;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+a:link:hover, a:visited:hover  {
+  color: #045491;
+  font-weight : bold;
+  text-decoration : underline;
+}
+
+body .ui-steps .ui-steps-item {
+    width: 15%;
+}
+ 
+body .ui-state-highlight {
+    text-shadow: none !important;
+}
+ 
+body .ui-steps.custom {
+    margin-bottom: 30px;
+}
+ 
+body .ui-steps.custom .ui-steps-item .ui-menuitem-link {
+    height: 10px;
+    padding: 0 1em;
+    overflow: visible;
+    border: 1px solid #c8c8c8;
+    display: block;
+    background-color: #FFFFFF;
+}
+ 
+body .ui-steps.custom .ui-steps-item .ui-menuitem-link .ui-steps-number {
+    background-color: #00ffff;
+    color: #ff6699;
+    display: inline-block;
+    width: 30px;
+    border-radius: 10px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    position: relative;
+    top: -3px;
+}
+ 
+body .ui-steps.custom .ui-steps-item .ui-menuitem-link .ui-steps-title {
+    margin-top: -6px;
+}
+ 
+body .ui-steps.custom .ui-steps-item.ui-state-highlight .ui-menuitem-link .ui-steps-title {
+    color: #555;
+}
+
+.noItemsInStorage{
+    background-color: #ff6666;
+}
+
+.ui-datagrid .ui-datagrid-content{
+    background-color: transparent;
+}
+.ui-datagrid .ui-grid{
+    background-color: transparent;
+}
+
+.ui-datagrid .ui-grid-row{
+    background-color: transparent;
+}
+
+
+
+

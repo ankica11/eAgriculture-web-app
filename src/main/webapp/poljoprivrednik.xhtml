@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./templates/mainTamplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="preR">
+        <f:event type="preRenderView" listener="#{poljoprivrednikMainController.preRenderExecute()}" />
+    </ui:define>
+
+    <ui:define name="content">
+        <div align="center"><h1>Dobrodošli #{poljoprivrednikMainController.curPoljoprivrednik.ime}</h1></div>
+        <h:form>
+        <div align="center">
+            <h3 style="color: #ff99cc">Pregled svih rasadnika</h3>
+        
+            <h:outputText value="Ne postoji nijedan rasadnik u sistemu" rendered="#{empty poljoprivrednikMainController.rasadnici}"/>
+            <p:dataTable value="#{poljoprivrednikMainController.rasadnici}" var="rasadnik" rowStyleClass="oddRow,evenRow" rendered="#{not empty poljoprivrednikMainController.rasadnici}" style="width: 70%" >
+                <p:column style="text-align: center">
+                    <f:facet name="header">Naziv</f:facet>
+                    #{rasadnik.naziv}
+                </p:column>
+                <p:column style="text-align: center">
+                    <f:facet name="header">Mesto</f:facet>
+                    #{rasadnik.mesto}
+                </p:column>
+                <p:column style="text-align: center">
+                    <f:facet name="header">Broj zasadjenih sadnica</f:facet>
+                    #{rasadnik.brZasadjenih}
+                </p:column>
+                <p:column style="text-align: center">
+                    <f:facet name="header">Broj slobodnih mesta</f:facet>
+                    #{rasadnik.brSlobodnih}
+                </p:column>
+                <p:column style="text-align: center">
+                    <f:facet name="header">Kolicina vode(l)</f:facet>
+                    #{rasadnik.voda}
+                </p:column>
+                <p:column style="text-align: center">
+                    <f:facet name="header">Temperatura (°C)</f:facet>
+                    #{rasadnik.temperatura}
+                </p:column>
+                <p:column style="text-align: center">
+                    <f:facet name="header">Detalji</f:facet>
+                    <p:commandButton value="Više..." action="#{poljoprivrednikMainController.prikaziDetalje(rasadnik)}" ajax="false"/>
+                </p:column>
+            
+            
+            </p:dataTable>
+            
+        </div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+             <p:panel header="OBAVEŠTENJE" rendered="#{not empty poljoprivrednikMainController.kriticniRasadnici}" style="background-color: #ff99cc;font-size: 15px; text-align: center; width: 30%; position: fixed; bottom: 0; right: 0">
+                <div style="color: red">Rasadnici #{poljoprivrednikMainController.kriticniRasadnici} zahtevaju hitno odrzavanje !!!</div>
+            </p:panel>
+            
+        </h:form>
+    </ui:define>
+
+</ui:composition>

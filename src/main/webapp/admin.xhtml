@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./templates/mainTamplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <div align="center">
+        <h1>Dobrodošli</h1>
+        <h:outputText value="Vaši podaci:" style="font-size: 15px"/> <br/>
+        <h:panelGrid columns="2">
+            Korisničko ime:
+            <h:outputText value="#{adminController.currAdmin.username}"/>
+            Lozinka:
+            <h:outputText value="#{adminController.currAdmin.password}"/>
+        </h:panelGrid> <br/><br/><br/>
+        <h1 style="color: white">Neprihvaćeni zahtevi za registraciju</h1>
+        <h:form>
+            <h:outputText value='Svi zahtevi su obradjeni' rendered="#{empty adminController.korisnici}" ></h:outputText>
+            <p:dataTable value="#{adminController.korisnici}" var="korisnik" rendered="#{not empty adminController.korisnici}" style="width: 70%">
+                <p:column style="text-align: center">
+                    <f:facet name="header">Korisnicko ime</f:facet>
+                    #{korisnik.username}
+                </p:column>
+                <p:column style="text-align: center">
+                    <f:facet name="header">Lozinka</f:facet>
+                    #{korisnik.password}
+                </p:column>
+                <p:column style="text-align: center">
+                    <f:facet name="header">Tip korisnika</f:facet>
+                    #{korisnik.tip}
+                </p:column>
+                <p:column style="text-align: center">
+                    <f:facet name="header">Odobri</f:facet>
+                    <p:commandButton icon="ui-icon-check" action="#{adminController.prihvatiZahtev(korisnik)}" update="@form"></p:commandButton>
+                </p:column>
+                <p:column style="text-align: center">
+                    <f:facet name="header">Odbij</f:facet>
+                    <p:commandButton icon="ui-icon-closethick" action="#{adminController.odbijZahtev(korisnik)}" update="@form"></p:commandButton>
+                </p:column>
+            
+            </p:dataTable>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

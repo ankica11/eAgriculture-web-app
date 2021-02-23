@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./templates/mainTamplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="content">
+        <h:form>
+        <div align="center">
+            <h1>Detalji o proizvodu</h1>
+            <h:outputText value="Nema komentara ni ocena za trazeni porizvod" rendered="#{empty onlineShopController.ocene}"/>
+            <p:dataTable value="#{onlineShopController.ocene}" var="detalj" style="width: 70%; text-align: center" rendered="#{not empty onlineShopController.ocene}">
+                <p:column style="text-align: center">
+                    <f:facet name="header">Korisnicko ime</f:facet>
+                    #{detalj.poljoprivrednik.korisnik.username}
+                </p:column>
+                <p:column style="text-align: center">
+                    <f:facet name="header">Ocena</f:facet>
+                    <p:rating value="#{detalj.ocena}" readonly="true"/>
+                    
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Komentar</f:facet>
+                    #{detalj.komentar}
+                </p:column>
+            </p:dataTable>
+        </div>
+            <hr/>
+            <div align="center">
+                <h3>Ostavite komentar</h3>
+                <h:panelGrid columns="2">
+                    Komentar:
+                    <p:inputTextarea value="#{onlineShopController.komentar}"/>
+                    Ocena:
+                    <p:rating value="#{onlineShopController.ocenaProizvoda}"/>
+                    <p:commandButton value="Ostavi" action="#{onlineShopController.ostaviKomentar()}" update="@form"/>
+                </h:panelGrid>
+                <h:outputText value="#{onlineShopController.messageDetalji}" style="color: red; font-size: 20px" rendered="#{not empty onlineShopController.messageDetalji}"/>
+            </div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+       <a href="onlineShop.xhtml">Prethodna</a>
+            <p:panel header="OBAVEŠTENJE" rendered="#{not empty poljoprivrednikMainController.kriticniRasadnici}" style="background-color: #ff99cc;font-size: 15px; text-align: center; width: 30%; position: fixed; bottom: 0; right: 0">
+                <div style="color: red">Rasadnici #{poljoprivrednikMainController.kriticniRasadnici} zahtevaju hitno odrzavanje !!!</div>
+            </p:panel>
+      </h:form>
+    </ui:define>
+
+</ui:composition>

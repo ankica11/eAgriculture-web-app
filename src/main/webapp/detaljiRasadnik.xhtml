@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./templates/mainTamplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+   
+
+    <ui:define name="content">
+        
+        <h3 align="center" style="color: #ffffff">Detalji o rasadniku "#{poljoprivrednikMainController.izabranRasadnik.naziv}"</h3>
+        <h:form id="formaDetalji">
+            
+            <div align="center">
+            <p:dashboard id="board" model="#{poljoprivrednikMainController.model}">
+                <p:panel id="temperatura" header="Trenutna temperatura (°C)">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="#{poljoprivrednikMainController.izabranRasadnik.temperatura}" style="font-weight: bold" />
+                        <p:commandButton icon="ui-icon-plusthick" action="#{poljoprivrednikMainController.povecajTemp()}" update="@form" style="color: green; font-weight: bold" />
+                        <h:outputText value="      "/>
+                        <p:commandButton icon="ui-icon-minusthick" action="#{poljoprivrednikMainController.smanjiTemp()}" update="@form" style='color: red; font-weight: bold'/>
+                    </h:panelGrid>
+                </p:panel>
+                <p:panel id="voda" header="Trenutna kolicina vode (l)">
+                    <h:panelGrid columns="2">
+                        
+                        <h:outputText value="#{poljoprivrednikMainController.izabranRasadnik.voda}" style="font-weight: bold" />
+                        
+                        <p:commandButton icon="ui-icon-plusthick" action="#{poljoprivrednikMainController.dodajVodu()}" update="@form" style="color: green; font-weight: bold"/>
+                         <h:outputText value="      "/>
+                         <p:commandButton icon="ui-icon-minusthick" action="#{poljoprivrednikMainController.smanjiVodu()}" update="@form" style='color: red; font-weight: bold'/>
+                    </h:panelGrid>
+                </p:panel>
+            </p:dashboard>
+            </div>
+            
+            
+       
+            <div align="center" ><h3 style="color: #ff6699; margin-right: 200px">RASPORED SADNICA</h3>
+            
+                <p:dataGrid id="sadnice" value="#{poljoprivrednikMainController.sadniceMesta}" var="mesto" columns="#{poljoprivrednikMainController.izabranRasadnik.sirina}" style="width: 50%; position: relative" >
+                    <p:panel style="#{mesto.sadnica==null ? 'background-color: palegreen' : 'background-color: plum'};text-align: center;width: 40px;height: 40px;">
+                        <h:panelGrid columns="1">
+                            <p:commandButton action="#{poljoprivrednikMainController.prihvati(mesto)}" icon="ui-icon-heart" update="@form" style="width: 20px; height: 20px; align-items: center" />
+                        </h:panelGrid>
+                    </p:panel>
+               
+            </p:dataGrid>
+            </div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            
+            <p:panel header="OBAVEŠTENJE" rendered="#{not empty poljoprivrednikMainController.kriticniRasadnici}" style="background-color: #ff99cc;font-size: 15px; text-align: center; width: 30%; position: fixed; bottom: 0; right: 0">
+                <div style="color: red">Rasadnici #{poljoprivrednikMainController.kriticniRasadnici} zahtevaju hitno odrzavanje !!!</div>
+            </p:panel>
+            
+           
+           
+            
+            
+            <p:dialog id="prozor" header="sadnica info" widgetVar="sadnicaInfo" width="500" height="500" hideEffect="fade" showEffect="fade" resizable="false" style="width: 70%">
+                   <div align="right">
+        <h:outputText value="  " id="msgid" binding="#{poljoprivrednikMainController.component}"/>
+        </div>
+                <p:outputPanel id="sad"  rendered="#{empty poljoprivrednikMainController.izabranaSadnica}" style="width: 100%">
+                   
+                    <div align="center">
+                        <h3>Zasadi novu sadnicu</h3>
+                    <h:outputText value="Nema raspolozivih sadnica u magacinu" rendered="#{empty poljoprivrednikMainController.sadniceMagacin}"/>
+                    <p:dataTable value="#{poljoprivrednikMainController.sadniceMagacin}" var="s" rowStyleClass="oddRow,evenRow" rendered="#{not empty poljoprivrednikMainController.sadniceMagacin}" style="width: 100%">
+                        <p:column style="text-align: center">
+                        <f:facet name="header">Naziv</f:facet>
+                        #{s.onlineprodavnica.naziv}
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">Proizvodjac</f:facet>
+                            #{s.onlineprodavnica.preduzece.naziv}
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">Raspoloziva kolicina</f:facet>
+                            #{s.kolicina}
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">Akcija</f:facet>
+                            <p:commandButton value="ZASADI" action="#{poljoprivrednikMainController.zasadiSadnicu(s)}" update="@form"></p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    
+                    </div>
+                </p:outputPanel>
+                <p:outputPanel id="panel2" rendered="#{not empty poljoprivrednikMainController.izabranaSadnica}" style="width:100%">
+                    <div align="center">
+                    <h3>Informacije o sadnici</h3>
+                    <h:panelGrid columns="2">
+                        Naziv:
+                        <h:outputText value="#{poljoprivrednikMainController.izabranaSadnica.magacin.onlineprodavnica.naziv}"/>
+                        Proizvodjač:
+                        <h:outputText value="#{poljoprivrednikMainController.izabranaSadnica.magacin.onlineprodavnica.preduzece.naziv}"/>
+                        Napredak:
+                        <p:progressBar id="napredak" widgetVar="status" value="#{poljoprivrednikMainController.trenutniNapredak()}" displayOnly="true" />
+                    </h:panelGrid>
+                    <hr/>
+                        <h3>Dodavanje preparata</h3>
+                        <h:outputText value="Nema preparata na stanju u magacinu" rendered="#{empty poljoprivrednikMainController.preparatiMagacin}"/>
+                        <p:dataTable value="#{poljoprivrednikMainController.preparatiMagacin}" var="preparat" rowStyleClass="oddRow,evenRow" style="width: 100%" rendered="#{not empty poljoprivrednikMainController.preparatiMagacin}">
+                            <p:column style="text-align: center">
+                                <f:facet name="header">Naziv</f:facet>
+                                #{preparat.onlineprodavnica.naziv}
+                            </p:column>
+                            <p:column style="text-align: center">
+                                <f:facet name="header">Proizvodjac</f:facet>
+                                #{preparat.onlineprodavnica.preduzece.naziv}
+                            </p:column>
+                            <p:column style="text-align: center">
+                                <f:facet name="header">Brzina delovanja(u danima)</f:facet>
+                                #{preparat.onlineprodavnica.uputstvo}
+                            </p:column>
+                            <p:column style="text-align: center">
+                                <f:facet name="header">Raspolozivo u magacinu</f:facet>
+                                #{preparat.kolicina}
+                            </p:column>
+                            <p:column style="text-align: center">
+                                <f:facet name="header">Akcija</f:facet>
+                                <p:commandButton value="DODAJ" action="#{poljoprivrednikMainController.dodajPreparat(preparat)}" update="@form"/>
+                            </p:column>
+                        </p:dataTable>
+                        <br/><br/><br/><br/>
+                        
+                        <h:panelGrid columns="1">
+                            <h:outputText value="SADNICA JE SPREMNA ZA VADJENJE" style="color: red; font-size: 25px;font-weight: bold" rendered="#{poljoprivrednikMainController.izabranaSadnica.napredak>=poljoprivrednikMainController.izabranaSadnica.magacin.onlineprodavnica.uputstvo}"/>
+                        <div align="center">
+                            <p:commandButton value="IZVADI SADNICU" action="#{poljoprivrednikMainController.izvadiSadnicu()}" rendered="#{poljoprivrednikMainController.izabranaSadnica.napredak>=poljoprivrednikMainController.izabranaSadnica.magacin.onlineprodavnica.uputstvo}" update="@form"/>
+                        </div>
+                        </h:panelGrid>
+                           
+                    </div>
+                </p:outputPanel>
+            </p:dialog>
+          
+            
+         
+                
+                
+        </h:form>
+    </ui:define>
+
+</ui:composition>

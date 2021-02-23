@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./templates/startTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+   
+
+    <ui:define name="content">
+        <a href="login.xhtml">LOGIN</a> |
+        <a href="register.xhtml">REGISTER</a>
+        
+        <div align="center">
+        <h1>Dobrodošli u ePoljoprivrednik</h1>
+        </div>
+        <div align="center">
+        <p:galleria value="#{loginController.images}" var="image" panelWidth="700" panelHeight="313" showCaption="false">
+            <p:graphicImage  library="images" name="sadnice/#{image}" height="300" width="700" />
+        </p:galleria>
+            
+            
+        </div>
+        
+        
+        
+       
+       
+       
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./templates/startTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                    
+                xmlns:p="http://primefaces.org/ui">
+
+    
+    <ui:define name="cap">
+        <script src="https://www.google.com/recaptcha/api.js" async='async' defer='defer'></script>
+
+    </ui:define>
+    <ui:define name="content">
+        <div align="center">
+            <h1>Registrovanje novog korisnika</h1>
+        <h:form>
+            
+             <h:panelGrid columns="2">
+                Registrujte se kao:
+                <p:selectOneMenu value="#{registracijaController.selektovanTip}">
+                    <f:selectItem itemValue="poljoprivrednik" itemLabel="poljoprivrednik" />
+                    <f:selectItem itemValue="preduzetnik" itemLabel="preduzeće" />
+                    
+                </p:selectOneMenu>
+                <p:commandButton value="Prikaži" action="#{registracijaController.prikazi()}" update="@form"/>
+            </h:panelGrid>
+            <br/><br/><br/><br/><br/><hr/>
+        
+            <p:panel header="Registracija poljoprivrednika" rendered="#{registracijaController.selektovanTip eq 'poljoprivrednik'}" style="width: 50%">
+            <h:panelGrid columns="3">
+                Ime:
+                <h:inputText id="ime" value="#{registracijaController.ime}" required="true" requiredMessage="Obavezno polje"></h:inputText>
+                <h:message for="ime" style="color:red"></h:message>
+                Prezime:
+                <h:inputText id="prezime" value="#{registracijaController.prezime}" required="true" requiredMessage="Obavezno polje"></h:inputText>
+                <h:message for="prezime" style="color:red"></h:message>
+                Korisnicko ime:
+                <h:inputText id="kime" value="#{registracijaController.usernamePoljo}" required="true" requiredMessage="Obavezno polje"></h:inputText>
+                <h:message for="kime" style="color: red"></h:message>
+                Lozinka:
+                <h:inputSecret id="lozinka" value="#{registracijaController.passwordPoljo}" required="true" requiredMessage="Obavezno polje" validatorMessage="Lozinka u neispravnom formatu">
+                    <f:validateRegex pattern="^((?=.*[A-Z])(?=.*\d)(?=.*[a-z]).{7,})$"/>
+                </h:inputSecret>
+                <h:message for="lozinka" style='color:red'></h:message>
+                Potvrda lozinke:
+                <h:inputSecret id="potvrda" value="#{registracijaController.confirmPassPoljo}" required="true" requiredMessage="Obavezno polje"></h:inputSecret>
+                <h:message for="potvrda" style='color:red'></h:message>
+                Datum rodjenja:
+                <h:inputText id="datum" value="#{registracijaController.datumRodjenja}" required="true" requiredMessage="Obavezno polje" 
+                             converterMessage="Datum morate uneti u formatu 'godina-mesec-dan' sa pocetnim nulama">
+                    <f:convertDateTime pattern="yyyy-MM-dd"/>
+                </h:inputText>
+                <h:message for='datum' style='color: red'/>
+                Mesto rodjenja:
+                <h:inputText id='mesto' value="#{registracijaController.mestoRodjenja}" required='true' requiredMessage="Obavezno polje"></h:inputText>
+                <h:message for="mesto" style='color:red'></h:message>
+                Kontakt telefon:
+                <h:inputText id='tel' value="#{registracijaController.telefon}" required='true' requiredMessage="Obavezno polje"></h:inputText>
+                 <h:message for="tel" style='color:red'></h:message>
+                 Email:
+                 <h:inputText id='email' value="#{registracijaController.emailPoljo}" required='true' requiredMessage="Obavezno polje" validatorMessage="Email je u pogresnom formatu">
+                     <f:validateRegex pattern="^\w+@\w+\.\w+$"></f:validateRegex>
+                         
+                 </h:inputText>
+                 <h:message for="email" style='color:red'></h:message>
+                 <h:outputText value="    " />
+                 <div class="g-recaptcha" data-sitekey="6Ler7acZAAAAAFqmNbmk3vJTtkMBZRoO6ux4D-10"></div>
+                 <h:outputText value="   " />
+                
+                 <p:commandButton action="#{registracijaController.registerPoljo()}" value="REGISTRUJ SE" update="@form"/>
+            </h:panelGrid>
+            <h:outputText value="#{registracijaController.message}" style="color: green"/>
+            </p:panel>
+      
+            <p:panel header="Registracija preduzća" rendered="#{registracijaController.selektovanTip eq 'preduzetnik'}" style="width:50%">
+        
+            <h:panelGrid columns="3">
+                Naziv:
+                <h:inputText id="naziv" value="#{registracijaController.naziv}" required="true" requiredMessage="Obavezno polje"></h:inputText>
+                <h:message for="naziv" style="color:red"></h:message>
+                
+                Skraceni naziv:
+                <h:inputText id="snaz" value="#{registracijaController.usernamePred}" required="true" requiredMessage="Obavezno polje"></h:inputText>
+                <h:message for='snaz' style="color: red"></h:message>
+                Lozinka:
+                <h:inputSecret id="loz" value="#{registracijaController.passwordPred}" required="true" requiredMessage="Obavezno polje" validatorMessage="Lozinka u neispravnom formatu">
+                    <f:validateRegex pattern="^((?=.*[A-Z])(?=.*\d)(?=.*[a-z]).{7,})$"/>
+                </h:inputSecret>
+                <h:message for="loz" style='color:red'></h:message>
+                Potvrda lozinke:
+                <h:inputSecret id="pot" value="#{registracijaController.confirmPassPred}" required="true" requiredMessage="Obavezno polje"></h:inputSecret>
+                <h:message for="pot" style='color:red'></h:message>
+                Datum osnivanja:
+                <h:inputText id="datumo" value="#{registracijaController.datumOsnivanja}" required="true" requiredMessage="Obavezno polje" 
+                             converterMessage="Datum morate uneti u formatu 'godina-mesec-dan' sa pocetnim nulama">
+                    <f:convertDateTime pattern="yyyy-MM-dd"/>
+                </h:inputText>
+                <h:message for='datumo' style='color: red'/>
+                Mesto:
+                <h:inputText id='mestop' value="#{registracijaController.mesto}" required='true' requiredMessage="Obavezno polje"></h:inputText>
+                <h:message for="mestop" style='color:red'></h:message>
+             
+                 Email:
+                 <h:inputText id='emailp' value="#{registracijaController.emailPred}" required='true' requiredMessage="Obavezno polje" validatorMessage="Email je u pogresnom formatu">
+                     <f:validateRegex pattern="^\w+@\w+\.\w+$"></f:validateRegex>
+                         
+                 </h:inputText>
+                 <h:message for="emailp" style='color:red'></h:message>
+                 <h:outputText value="    " />
+                 <div class="g-recaptcha" data-sitekey="6Ler7acZAAAAAFqmNbmk3vJTtkMBZRoO6ux4D-10"></div>
+                 <h:outputText value="   " />
+                 <p:commandButton action="#{registracijaController.registerPred()}" value="REGISTRUJ SE" update="@form"/>
+            </h:panelGrid>
+            <h:outputText value="#{registracijaController.messageP}" style="color: green"/>
+            </p:panel>
+        </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

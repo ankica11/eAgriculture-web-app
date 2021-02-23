@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./templates/mainTamplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <div align="center">
+            <h:form>
+            <h1>Dodavanje novog korisnika</h1>
+            
+            <h:panelGrid columns="2">
+                Izaberite tip korisnika:
+                <p:selectOneMenu value="#{adminController.selektovanTip}">
+                    <f:selectItem itemValue="poljoprivrednik" itemLabel="poljoprivrednik" />
+                    <f:selectItem itemValue="preduzetnik" itemLabel="preduzeće" />
+                    <f:selectItem itemValue="admin" itemLabel="administrator" />
+                </p:selectOneMenu>
+                <p:commandButton value="Prikaži" action="#{adminController.prikazi()}" update="@form"/>
+            </h:panelGrid>
+            <p:panel rendered="#{adminController.selektovanTip eq 'poljoprivrednik'}" style="width: 50%">
+                <h:panelGrid columns="2">
+                    Ime: <p:inputText value="#{adminController.noviPoljo.ime}"/>
+                    Prezime: <p:inputText value="#{adminController.noviPoljo.prezime}" />
+                    Korisnicko ime: <p:inputText value="#{adminController.novi.username}" />
+                    Loznika: <p:password value="#{adminController.novi.password}"/>
+                    Mesto rodjenja: <p:inputText value="#{adminController.noviPoljo.mestoRodjenja}"/>
+                    Datum rodjenja: <p:inputText value="#{adminController.noviPoljo.datumRodjenja}">
+                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                    </p:inputText>
+                    Email: <p:inputText value="#{adminController.noviPoljo.email}"/>
+                    Telefon: <p:inputText value="#{adminController.noviPoljo.telefon}"/>
+                    <p:commandButton value="Dodaj" action="#{adminController.dodaj()}" update="@form"></p:commandButton>
+                </h:panelGrid>
+            </p:panel>
+            <p:panel rendered="#{adminController.selektovanTip eq 'preduzetnik'}" style="width: 50%">
+                <h:panelGrid columns="2">
+                    Naziv: <p:inputText value="#{adminController.novoPred.naziv}"/>
+                    Mesto: <p:inputText value="#{adminController.novoPred.mesto}" />
+                    Korisnicko ime: <p:inputText value="#{adminController.novi.username}" />
+                    Loznika: <p:password value="#{adminController.novi.password}"/>
+                    Datum osnivanja: <p:inputText value="#{adminController.novoPred.datumOsnivanja}">
+                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                    </p:inputText>
+                    Email: <p:inputText value="#{adminController.novoPred.email}"/>
+                    
+                    <p:commandButton value="Dodaj" action="#{adminController.dodaj()}" update="@form"></p:commandButton>
+                </h:panelGrid>
+            </p:panel>
+            <p:panel rendered="#{adminController.selektovanTip eq 'admin'}" style="width: 50%">
+                <h:panelGrid columns="2">
+             
+                    Korisnicko ime: <p:inputText value="#{adminController.novi.username}" />
+                    Loznika: <p:password value="#{adminController.novi.password}"/>
+                 
+                    <p:commandButton value="Dodaj" action="#{adminController.dodaj()}" update="@form"></p:commandButton>
+                </h:panelGrid>
+            </p:panel>
+            <br/><br/>
+            <h:outputText value="#{adminController.message}" style="color: greenyellow; font-size: 16px"/>
+            </h:form>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        </div>
+    </ui:define>
+
+</ui:composition>

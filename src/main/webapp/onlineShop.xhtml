@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./templates/mainTamplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:define name="preR">
+        <f:event type="preRenderView" listener="#{onlineShopController.preRenderExecute()}" />
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+        <div align="center">
+            <h1>ONLINE PRODAVNICA</h1>
+            <h:outputText value="Prodavnica je trenutno prazna! Sacekajte dok se ne popunimo! Brzo smo tu!" rendered="#{empty onlineShopController.proizvodi}"/>
+                          <p:dataTable value="#{onlineShopController.proizvodi}" var="p" style="width: 70%" rendered="#{not empty onlineShopController.proizvodi}">
+                              <p:column style="text-align: center">
+                                  <f:facet name="header">NAZIV</f:facet>
+                                 #{p.proizvod.naziv}
+                              </p:column>
+                              <p:column style="text-align: center">
+                                  <f:facet name="header">PROIZVODJAC</f:facet>
+                                  #{p.proizvod.preduzece.naziv}
+                              </p:column>
+                              <p:column style="text-align: center">
+                                  <f:facet name="header">OCENA</f:facet>
+                                  #{p.proizvod.srOcena}
+                              </p:column>
+                              <p:column style="text-align: center">
+                                  <f:facet name="header">CENA</f:facet>
+                                  #{p.proizvod.jedinicnaCena}
+                              </p:column>
+                              <p:column style="text-align: center">
+                                  <f:facet name="header">STANJE</f:facet>
+                                  <h:outputText value="Ima na stanju" style="color: greenyellow" rendered="#{p.proizvod.kolicina>0}"/>
+                                  <h:outputText value="Nema na stanju" style="color: red" rendered="#{p.proizvod.kolicina==0}"/>
+                              </p:column>
+                              <p:column style="text-align: center">
+                                  <f:facet name="header">DETALJI</f:facet>
+                                  <p:commandButton value="Prikazi" action="#{onlineShopController.prikaziDetalje(p)}" ajax="false"/>
+                              </p:column>
+                              <p:column style="text-align: center">
+                                  <f:facet name="header">KOLICINA</f:facet>
+                                  <h:inputText value="#{p.kolicina}"/>
+                                  
+                               </p:column>
+                              <p:column style="text-align: center">
+                                  <f:facet name="header">KORPA</f:facet>
+                                  <p:commandButton icon="ui-icon-cart" action="#{onlineShopController.dodajUKorpu(p)}" update="@form" />
+                               </p:column>
+                              
+                          </p:dataTable>
+            <br/><br/><br/><br/>
+            <h:outputText value='#{onlineShopController.message}' style="font-size: 30px; color: pink"/>
+            <br/><br/><br/>
+            <p:dataTable id='korpa' value="#{onlineShopController.korpa}" var="pr" style="width: 50%" rendered="#{not empty onlineShopController.korpa}">
+                <f:facet name='header'>MOJA KORPA</f:facet>
+                <p:column style="text-align: center">
+                    <f:facet name="header">Naziv</f:facet>
+                    #{pr.proizvod.naziv}
+                </p:column>
+                <p:column style="text-align: center">
+                    <f:facet name="header">Kolicina</f:facet>
+                    #{pr.kolicina}
+                </p:column>
+                <p:column style="text-align: center">
+                    <f:facet name="header">Brisanje</f:facet>
+                    <p:commandButton action="#{onlineShopController.izbaciIzKorpe(pr)}" update="@form" icon="ui-icon-trash"/>
+                </p:column>
+            </p:dataTable>
+            <br/><br/><br/><br/><br/>
+            <h:panelGrid columns="2" rendered="#{not empty onlineShopController.korpa}">
+                <p:commandButton value="Isparzni korpu" action="#{onlineShopController.isprazniKorpu()}" update="@form"/>
+                <p:commandButton value="Potvrdi narudzbinu" action="#{onlineShopController.potvrdiPorudzbinu()}" update="@form"/>
+                <h:outputText value="Izaberite rasadnik za dostavu: " style="font-weight: bold"/>
+                <p:selectOneMenu value="#{onlineShopController.izabranRasadnik}">
+                    <f:selectItems value="#{onlineShopController.rasadnici}"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+            <br/><br/><br/>
+            
+        </div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+             <p:panel header="OBAVEŠTENJE" rendered="#{not empty poljoprivrednikMainController.kriticniRasadnici}" style="background-color: #ff99cc;font-size: 15px; text-align: center; width: 30%; position: fixed; bottom: 0; right: 0">
+                <div style="color: red">Rasadnici #{poljoprivrednikMainController.kriticniRasadnici} zahtevaju hitno odrzavanje !!!</div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

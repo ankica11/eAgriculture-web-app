@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./templates/mainTamplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <div align="center">
+            <h:form>
+            <h1>Ažuriranje korisnika sistema</h1>
+            <h:panelGrid columns="2">
+                Izaberite tip korisnika:
+                <p:selectOneMenu value="#{adminController.selektovanTip}">
+                    <f:selectItem itemValue="poljoprivrednik" itemLabel="poljoprivrednik" />
+                    <f:selectItem itemValue="preduzetnik" itemLabel="preduzeće" />
+                </p:selectOneMenu>
+                <p:commandButton value="Prikaži" action="#{adminController.prikazi()}" update="@form"/>
+            </h:panelGrid>
+            
+            <p:dataTable value="#{adminController.poljoprivrednici}" var="p" rendered='#{adminController.selektovanTip eq "poljoprivrednik"}' style="width: 100%">
+                <p:column>
+                    <f:facet name="header">Ime</f:facet>
+                    <p:inputText value="#{p.ime}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Prezime</f:facet>
+                    <p:inputText value="#{p.prezime}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Mestorodjenja</f:facet>
+                    <p:inputText value="#{p.mestoRodjenja}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Datum rodjenja</f:facet>
+                    <p:inputText value="#{p.datumRodjenja}">
+                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                    </p:inputText>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">email</f:facet>
+                    <p:inputText value="#{p.email}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Telefon</f:facet>
+                    <p:inputText value="#{p.telefon}"/>
+                </p:column>
+                 <p:column style="text-align: center">
+                    <f:facet name="header">Izmeni</f:facet>
+                    <p:commandButton icon="ui-icon-pencil" action="#{adminController.azurirajPoljo(p)}" update="@form"/>
+                </p:column>
+            </p:dataTable>
+            <br/><br/><br/>
+            <p:dataTable value="#{adminController.preduzeca}" var="pr" rendered="#{adminController.selektovanTip eq 'preduzetnik' }" style="width: 100%">
+               <p:column>
+                    <f:facet name="header">Naziv</f:facet>
+                    <p:inputText value="#{pr.naziv}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Mesto</f:facet>
+                    <p:inputText value="#{pr.mesto}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Datum osnivanja</f:facet>
+                    <p:inputText value="#{pr.datumOsnivanja}">
+                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                    </p:inputText>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">email</f:facet>
+                    <p:inputText value="#{pr.email}"/>
+                </p:column>
+                <p:column style="text-align: center" >
+                    <f:facet name="header">Izmeni</f:facet>
+                    <p:commandButton icon="ui-icon-pencil" action="#{adminController.azurirajPreduzece(pr)}" update="@form"/>
+                </p:column>
+            
+            </p:dataTable>
+            
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            </h:form>
+                
+            
+        </div>
+    </ui:define>
+
+</ui:composition>

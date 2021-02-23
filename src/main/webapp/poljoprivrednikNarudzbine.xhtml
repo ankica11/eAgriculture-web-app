@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./templates/mainTamplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="preR">
+        <f:event type="preRenderView" listener="#{narudzbinePoljoprivrednikController.preRenderExecute()}" />
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <div align="center">
+            <h3 style="color: #ff99cc">NARUČENI PROIZVODI</h3>
+            <h:outputText value="Nema neisporučenih proizvoda" rendered="#{empty narudzbinePoljoprivrednikController.naruceniProizvodi}" style="color: greenyellow; font-size: 20px"></h:outputText>
+            <p:dataTable value="#{narudzbinePoljoprivrednikController.naruceniProizvodi}" var="proizvod" filteredValue="#{narudzbinePoljoprivrednikController.proizvodiFilter}" rendered="#{not empty narudzbinePoljoprivrednikController.naruceniProizvodi}" style="width: 70%" emptyMessage="Nijedna stavka se ne podudara sa pretragom">
+                <p:column style="text-align: center" filterBy="#{proizvod.narudzbina.idN}" filterMatchMode="startsWith" sortBy="#{proizvod.narudzbina.idN}">
+                    <f:facet name="header">ID</f:facet>
+                    #{proizvod.narudzbina.idN}
+                </p:column>
+                <p:column style="text-align: center" filterBy="#{proizvod.onlineprodavnica.naziv}" filterMatchMode="startsWith" sortBy="#{proizvod.onlineprodavnica.naziv}">
+                    <f:facet name="header">Proizvod</f:facet>
+                    #{proizvod.onlineprodavnica.naziv}
+                </p:column>
+                <p:column style="text-align: center" filterBy="#{proizvod.onlineprodavnica.preduzece.naziv}" filterMatchMode="startsWith" sortBy="#{proizvod.onlineprodavnica.preduzece.naziv}">
+                    <f:facet name="header">Proizvođač</f:facet>
+                    #{proizvod.onlineprodavnica.preduzece.naziv}
+                </p:column>
+                <p:column style="text-align: center" filterBy="#{proizvod.kolicina}" filterMatchMode="startsWith" sortBy="#{proizvod.kolicina}">
+                    <f:facet name="header">Količina</f:facet>
+                    #{proizvod.kolicina}
+                </p:column>
+                <p:column style="text-align: center" filterBy="#{proizvod.narudzbina.rasadnik.naziv}" filterMatchMode="startsWith" sortBy="#{proizvod.narudzbina.rasadnik.naziv}">
+                    <f:facet name="header">Za rasadnik</f:facet>
+                    #{proizvod.narudzbina.rasadnik.naziv}
+                </p:column>
+                <p:column style="text-align: center" filterBy="#{proizvod.narudzbina.datum}" filterMatchMode="startsWith" sortBy="#{proizvod.narudzbina.datum}">
+                    <f:facet name="header">Datum</f:facet>
+                    #{proizvod.narudzbina.datum}
+                </p:column>
+                <p:column style="text-align: center">
+                    <f:facet name="header">Otkaži</f:facet>
+                    <p:commandButton icon="ui-icon-trash" action="#{narudzbinePoljoprivrednikController.otkaziNarudzbinu(proizvod)}" update="@form"/>
+                </p:column>
+            </p:dataTable>
+            </div>
+       <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+       <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        
+            <p:panel header="OBAVEŠTENJE" rendered="#{not empty poljoprivrednikMainController.kriticniRasadnici}" style="background-color: #ff99cc;font-size: 15px; text-align: center; width: 30%; position: fixed; bottom: 0; right: 0">
+                <div style="color: red">Rasadnici #{poljoprivrednikMainController.kriticniRasadnici} zahtevaju hitno odrzavanje !!!</div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

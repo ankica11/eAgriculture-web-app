@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17.05.2020. 19.35.55 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="beans.Sadnica" table="sadnica" catalog="projekat" optimistic-lock="version">
+        <id name="idSad" type="java.lang.Integer">
+            <column name="idSad" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="magacin" class="beans.Magacin" fetch="select">
+            <column name="idM" not-null="true" />
+        </many-to-one>
+        <property name="napredak" type="java.lang.Integer">
+            <column name="napredak" />
+        </property>
+         <property name="red" type="int">
+            <column name="red" />
+        </property>
+         <property name="kolona" type="int">
+            <column name="kolona" />
+        </property>
+        <property name="vremeDoVadjenja" type="int">
+            <column name="vremeDoVadjenja" />
+        </property>
+    </class>
+</hibernate-mapping>

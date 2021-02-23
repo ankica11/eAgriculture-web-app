@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./templates/mainTamplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <div align="center">
+        <h1>Dodavanje novog proizvoda</h1>
+        </div>
+       <h:form>
+           <div align="center">  
+               <p:steps activeIndex="#{dodavanjeProizvodaController.activestep}" readonly="false" styleClass="custom">
+    <p:menuitem value="Naziv"/>
+    <p:menuitem value="Tip"/>
+    <p:menuitem value="Uputstvo"/>
+    <p:menuitem value="Kolicina"/>
+    <p:menuitem value="Cena"/>
+    <p:menuitem value="Potvrda"/>
+    
+      </p:steps>
+           </div>
+           <div align="center">   
+             <h:outputText value="#{dodavanjeProizvodaController.message}" style="color: greenyellow; font-size: 20px;" />
+      <br/><br/><br/>
+       <p:panel rendered="#{dodavanjeProizvodaController.activestep==0}" header="Naziv proizvoda" style="width: 50%">
+           <h:panelGrid columns="2">
+               Naziv: <p:inputText id="naziv" value="#{dodavanjeProizvodaController.naziv}" required="true" requiredMessage="Obavezno polje"/>
+               <h:outputText value="  "/>
+               <p:message for="naziv" style="color: red"/>
+           </h:panelGrid> 
+           <br/><br/><br/><br/>
+            <p:commandButton value="PRETHODNI" action="#{dodavanjeProizvodaController.prethodni()}" update="@form" disabled="true"/>
+            <p:commandButton value="SLEDECI" action="#{dodavanjeProizvodaController.sledeci()}" update="@form"/>
+           
+       </p:panel>
+       <p:panel rendered="#{dodavanjeProizvodaController.activestep==1}" header="Tip proizvoda" style="width: 50%">
+           <h:panelGrid columns="2">
+           Tip: 
+           <p:selectOneMenu id="tip" value="#{dodavanjeProizvodaController.tip}" required="true" requiredMessage="Obavezno polje">
+               <f:selectItem itemValue="sadnica" itemLabel="sadnica"></f:selectItem>
+               <f:selectItem itemValue="preparat" itemLabel="preparat"></f:selectItem>
+           </p:selectOneMenu>
+           <h:outputText value="  "/>
+           <p:message for="tip" style="color: red"/>
+           </h:panelGrid>
+           <br/><br/><br/><br/>
+            <p:commandButton value="PRETHODNI" action="#{dodavanjeProizvodaController.prethodni()}" update="@form"/>
+            <p:commandButton value="SLEDECI" action="#{dodavanjeProizvodaController.sledeci()}" update="@form"/>
+           
+       </p:panel>
+       <p:panel rendered="#{dodavanjeProizvodaController.activestep==2}" header="Uputstvo proizvoda" style="width: 50%">
+           <h:panelGrid columns="2">   
+           Uputstvo: <p:inputText id="uputstvo" value="#{dodavanjeProizvodaController.uputstvo}" />
+           <h:outputText value="  "/>
+           <p:message for="uputstvo" style="color: red"/>
+           </h:panelGrid>  
+           <br/><br/><br/><br/>
+            <p:commandButton value="PRETHODNI" action="#{dodavanjeProizvodaController.prethodni()}" update="@form"/>
+            <p:commandButton value="SLEDECI" action="#{dodavanjeProizvodaController.sledeci()}" update="@form"/>
+           
+       </p:panel>
+       <p:panel rendered="#{dodavanjeProizvodaController.activestep==3}" header="Kolicina proizvoda" style="width: 50%">
+           <h:panelGrid columns="2">
+            Kolicina: <p:inputText id="kolicina" value="#{dodavanjeProizvodaController.kolicina}" />
+           </h:panelGrid> 
+           <h:outputText value="  "/>
+           <p:message for="kolicina" style="color: red"/>
+           <br/><br/><br/><br/>
+            <p:commandButton value="PRETHODNI" action="#{dodavanjeProizvodaController.prethodni()}" update="@form"/>
+            <p:commandButton value="SLEDECI" action="#{dodavanjeProizvodaController.sledeci()}" update="@form"/>
+           
+       </p:panel>
+       <p:panel rendered="#{dodavanjeProizvodaController.activestep==4}" header="Cena proizvoda(RSD)" style="width: 50%">
+           <h:panelGrid columns="2">
+               Jedinicna cena: <p:inputText id="cena" value="#{dodavanjeProizvodaController.cena}" />
+           </h:panelGrid>  
+           <h:outputText value="  "/>
+           <p:message for="cena" style="color: red"/>
+           <br/><br/><br/><br/>
+            <p:commandButton value="PRETHODNI" action="#{dodavanjeProizvodaController.prethodni()}" update="@form"/>
+            <p:commandButton value="SLEDECI" action="#{dodavanjeProizvodaController.sledeci()}" update="@form"/>
+           
+       </p:panel>
+       <p:panel rendered="#{dodavanjeProizvodaController.activestep==5}" header="Potvrda" style="width: 50%">
+             
+           <br/><br/><br/><br/>
+           <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+             <p:commandButton value="Da" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+             <p:commandButton value="Ne" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+           </p:confirmDialog>  
+           <p:commandButton value="POTVRDI" action="#{dodavanjeProizvodaController.dodajProizvod()}" update="@form">
+               <p:confirm header="Potvrda" message="Da li ste sigurni?" icon="pi pi-exclamation-triangle" />
+  
+           </p:commandButton>
+          
+           <br/>
+      </p:panel>
+           </div>
+           <br/>
+            </h:form>
+     
+    </ui:define>
+
+</ui:composition>
