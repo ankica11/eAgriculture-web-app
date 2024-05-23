@@ -11,7 +11,7 @@ This web application is designed to assist farmers in managing their nursery gar
 - <b>Warehouse Management:</b> View and manage all supplies in the warehouse, including stock levels and storage information.
 - <b>Order Tracking:</b> Track the status of their orders and manage their nursery garden supplies.
 - <b>Ratings:</b> Rate the companies and their products based on satisfaction and quality.
-- <b>Notifications:</b> Receive in-app notifications if the temperature drops below or if water levels fall below certain thresholds.
+- <b>Notifications:</b> Receive in-app and email notifications if the temperature drops below or if water levels fall below certain thresholds.
   
 ### Agriculture Company Role:
 
